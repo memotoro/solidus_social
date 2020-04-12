@@ -5,11 +5,13 @@
 <% end %>
 
 <% content_for :page_actions do %>
-  <ul class="actions inline-menu">
-    <li>
-      <%= link_to I18n.t('spree.new_social_method'), new_object_url, id: 'admin_new_slide_link' %>
-    </li>
-  </ul>
+  <% if can? :manage, Spree::AuthenticationMethod %>
+    <ul class="actions inline-menu">
+      <li>
+        <%= link_to I18n.t('spree.new_social_method'), new_object_url, id: 'admin_new_slide_link', class: 'button' %>
+      </li>
+    </ul>
+  <% end %>
 <% end %>
 
 <% if @authentication_methods.any? %>
@@ -37,10 +39,12 @@
           <td class="align-center"><%= truncate method.api_key, length: 10 %></td>
           <td class="align-center"><%= truncate method.api_secret, length: 10 %></td>
           <td class="align-center"><%= method.environment.to_s.titleize %></td>
-          <td class="align-center"><%= method.active ? I18n.t('spree.yes') : I18n.t('spree.no') %></td>
+          <td class="align-center"><%= check_box_tag nil, nil, checked = method.active, disabled: 'disabled'  %></td>
           <td class="actions">
-            <%= link_to_edit method, no_text: true %>
-            <%= link_to_delete method, no_text: true %>
+            <% if can? :manage, Spree::AuthenticationMethod %>
+              <%= link_to_edit method, no_text: true %>
+              <%= link_to_delete method, no_text: true %>
+            <% end %>
           </td>
         </tr>
       <% end %>
