@@ -1,8 +1,11 @@
 ---
 es-MX:
+  authentications:
+    spree:
+      destroy: Método de autenticación eliminado
   devise:
     omniauth_callbacks:
-      success: "Estás sesión con tu cuenta de %{kind}."
+      success: "Estás en sesión con tu cuenta de %{kind}."
   spree:
     user_was_not_valid: "El usuario no fue válido."
     add_another_service: 'Añadir otro servicio para inicio de sesión:'
@@ -24,3 +27,4 @@ es-MX:
     please_confirm_your_email: 'Por favor confirme su email para continuar'
     sign_in_with: 'Autenticado con %{provider}'
     you_have_signed_in_with_these_services: "Has iniciado sesión con estos servicios"
+    environment: Ambiente

@@ -1,39 +1,44 @@
 # frozen_string_literal: true
 
-lib = File.expand_path('lib', __dir__)
-$LOAD_PATH.unshift lib unless $LOAD_PATH.include?(lib)
+require_relative 'lib/solidus_social/version'
 
-require 'solidus_social/version'
+Gem::Specification.new do |spec|
+  spec.name = 'solidus_social'
+  spec.version = SolidusSocial::VERSION
+  spec.authors = ['John Dyer']
+  spec.email = 'jdyer@spreecommerce.com'
 
-Gem::Specification.new do |s|
-  s.platform    = Gem::Platform::RUBY
-  s.name        = 'solidus_social'
-  s.version     = SolidusSocial.version
-  s.summary     = 'Adds social network login services (OAuth) to Spree'
-  s.description = s.summary
-  s.required_ruby_version = '>= 1.9.3'
+  spec.summary = 'Adds social network login services (OAuth) to Solidus'
+  spec.homepage = 'https://github.com/solidusio-contrib/solidus_social#readme'
+  spec.license = 'BSD-3-Clause'
 
-  s.author   = 'John Dyer'
-  s.email    = 'jdyer@spreecommerce.com'
-  s.homepage = 'http://www.spreecommerce.com'
-  s.license  = 'BSD-3'
 
-  s.files        = `git ls-files`.split("\n")
-  s.test_files   = `git ls-files -- spec/*`.split("\n")
-  s.require_path = 'lib'
-  s.requirements << 'none'
+  spec.metadata['homepage_uri'] = spec.homepage
+  spec.metadata['source_code_uri'] = 'https://github.com/solidusio-contrib/solidus_social'
+  spec.metadata['changelog_uri'] = 'https://github.com/solidusio-contrib/solidus_social/blob/master/CHANGELOG.md'
 
-  s.add_runtime_dependency 'deface'
-  s.add_runtime_dependency 'oa-core'
-  s.add_runtime_dependency 'omniauth'
-  s.add_runtime_dependency 'omniauth-amazon'
-  s.add_runtime_dependency 'omniauth-facebook'
-  s.add_runtime_dependency 'omniauth-github'
-  s.add_runtime_dependency 'omniauth-google-oauth2'
-  s.add_runtime_dependency 'omniauth-twitter'
-  s.add_runtime_dependency 'solidus_auth_devise'
-  s.add_runtime_dependency 'solidus_core', ['>= 1.0', '< 3']
-  s.add_runtime_dependency 'solidus_support'
+  spec.required_ruby_version = Gem::Requirement.new('~> 2.4')
 
-  s.add_development_dependency 'solidus_extension_dev_tools'
+  # Specify which files should be added to the gem when it is released.
+  # The `git ls-files -z` loads the files in the RubyGem that have been added into git.
+  files = Dir.chdir(__dir__) { `git ls-files -z`.split("\x0") }
+  spec.files = files.grep_v(%r{^(test|spec|features)/})
+  spec.test_files = files.grep(%r{^(test|spec|features)/})
+  spec.bindir = "exe"
+  spec.executables = files.grep(%r{^exe/}) { |f| File.basename(f) }
+  spec.require_paths = ["lib"]
+
+  spec.add_dependency 'deface'
+  spec.add_dependency 'oa-core'
+  spec.add_dependency 'omniauth'
+  spec.add_dependency 'omniauth-amazon'
+  spec.add_dependency 'omniauth-facebook'
+  spec.add_dependency 'omniauth-github'
+  spec.add_dependency 'omniauth-google-oauth2'
+  spec.add_dependency 'omniauth-twitter'
+  spec.add_dependency 'solidus_auth_devise'
+  spec.add_dependency 'solidus_core', ['>= 2.0.0', '< 3']
+  spec.add_dependency 'solidus_support', '~> 0.5'
+
+  spec.add_development_dependency 'solidus_dev_support'
 end
